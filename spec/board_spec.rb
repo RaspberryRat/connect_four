@@ -21,7 +21,7 @@ describe Board do
         "|◯||◯||◯||◯||◯||◯||◯|\n" +
         "|◯||◯||◯||◯||◯||◯||◯|\n" +
         "|◯||◯||◯||◯||◯||◯||◯|\n"        
-        expect(board).to receive(:print).with(drawn_board).at_least(56).times
+        expect(board).to receive(:print).with(drawn_board)
         board.draw_board
       end
     end

@@ -1,20 +1,18 @@
 require "pry-byebug"
-board = [[nil, 1, nil], [3, 4, 5], [6, nil, nil]]
+board = [[nil, 1, nil], [3, 4, 5], [6, nil, nil], [9, 0, 8]]
 
-i = 0
-j = 0
-while j < board.length
+row = 0
+to_print = ''
+board[0].length.times do
   board.map do |column|
-    if column[i].nil?
-      print "|o|"
+    if column[row].nil?
+      to_print += "|o|"
     else
-      print "|#{column[i]}|"
+      to_print += "|#{column[row]}|"
     end
   end
-  if i == 2
-    break
-  else
-    i += 1
-    print "\n"
-  end
+  to_print += "\n"
+  row += 1
 end
+
+print to_print

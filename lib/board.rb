@@ -10,23 +10,20 @@ class Board
     Array.new(7, Array.new(6))
   end
 
-  def draw_board(board)
-    i = 0
-    j = 0
-    while j < board.length
+  def draw_board
+    board_to_print = ''
+    row = 0
+    board[0].length.times do
       board.map do |column|
-        if column[i].nil?
-          print "|o|"
+        if column[row].nil?
+          board_to_print += "|◯|"
         else
-          print "|#{column[i]}|"
+          board_to_print += "|#{column[row]}|"
         end
       end
-      if i == 6
-        break
-      else
-        i += 1
-        print "\n"
-      end
+      board_to_print += "\n"
+      row += 1
     end
+    print board_to_print
   end
 end
