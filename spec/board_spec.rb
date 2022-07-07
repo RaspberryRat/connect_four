@@ -7,16 +7,29 @@ describe Board do
   describe '#create_board' do
     context 'when called creates a new board' do
       it 'creates a board' do
-        new_board = {
-          row_1: [nil, nil, nil, nil, nil, nil, nil],
-          row_2: [nil, nil, nil, nil, nil, nil, nil],
-          row_3: [nil, nil, nil, nil, nil, nil, nil],
-          row_4: [nil, nil, nil, nil, nil, nil, nil],
-          row_5: [nil, nil, nil, nil, nil, nil, nil],
-          row_6: [nil, nil, nil, nil, nil, nil, nil],
-        }
+        new_board = [[nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [ nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]]
         expect(board.create_board).to eq(new_board)
       end
     end
   end
+  describe '#draw_board' do
+    context 'when board is unplayed draws the current state of @board' do
+      it 'draws @board to terminal' do
+        drawn_board = "|◯||◯||◯||◯||◯||◯||◯|\n" +
+        "|◯||◯||◯||◯||◯||◯||◯|\n" +
+        "|◯||◯||◯||◯||◯||◯||◯|\n" +
+        "|◯||◯||◯||◯||◯||◯||◯|\n" +
+        "|◯||◯||◯||◯||◯||◯||◯|\n" +
+        "|◯||◯||◯||◯||◯||◯||◯|\n"        
+        expect(board).to receive(:print).with(drawn_board).at_least(56).times
+        board.draw_board
+      end
+    end
+  end
+#   describe '#legal_move?' do
+#     context 'when a column selected, checks if column full' do
+#       before do
+#         board.instance_variable_set(:@board, )
+#       it 'returns false, when column full' do
+
 end

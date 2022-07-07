@@ -1,18 +1,21 @@
 
 class Board
   def initialize
-    @board = nil
+    @board = create_board
   end
   attr_reader :board
 
   def create_board
-    {
-      row_1: Array.new(7),
-      row_2: Array.new(7),
-      row_3: Array.new(7),
-      row_4: Array.new(7),
-      row_5: Array.new(7),
-      row_6: Array.new(7),
-    }
+    Array.new(7, Array.new(6))
   end
+
+  # def draw_board
+  #   board.map do |key, value|
+  #     value.map do |v|
+  #       print "|◯|" if v.nil?
+  #       print "|#{v}|" unless v.nil?
+  #     end
+  #     print "\n"
+  #   end
+  # end
 end
