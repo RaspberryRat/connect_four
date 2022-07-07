@@ -1,7 +1,6 @@
-
 class Board
-  def initialize
-    @board = create_board
+  def initialize(board = create_board)
+    @board = board
   end
   attr_reader :board
 
@@ -15,11 +14,7 @@ class Board
     row = 0
     board[0].length.times do
       board.map do |column|
-        if column[row].nil?
-          board_to_print += "|◯|"
-        else
-          board_to_print += "|#{column[row]}|"
-        end
+        board_to_print += column[row].nil? ? "|◯|" : "|#{column[row]}|"
       end
       board_to_print += "\n"
       row += 1
@@ -29,6 +24,13 @@ class Board
 
   def legal_move?(column)
     return true if @board[column].first.nil?
+
     false
+  end
+
+  def place_token(column)
+    result = []
+    board[column].each_with_index { |row, index| result << index if row.nil? }
+    board[column][result.last] = 'X'
   end
 end

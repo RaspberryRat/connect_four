@@ -28,23 +28,38 @@ describe Board do
   end
   describe '#legal_move?' do
     context 'when a column selected, checks if column full' do
-      before do
-        board.instance_variable_set(:@board, [['X', 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] )
-      end
       it 'return false if column 0 full' do
+        board.instance_variable_set(:@board, [['X', 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]])
         expect(board.legal_move?(0)).to be(false)
       end
       it 'return true if column 1 has no tokens' do
+        board.instance_variable_set(:@board, [['X', 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]])
         expect(board.legal_move?(1)).to be(true)
       end
       it 'returns true if column 0 has a single nil' do
-        board.instance_variable_set(:@board, [[nil, 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] )
+        board.instance_variable_set(:@board, [[nil, 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]])
         expect(board.legal_move?(1)).to be(true)
       end
       it 'returns true if column 0 has 5 nil and a single other token' do
-        board.instance_variable_set(:@board, [[nil, nil, nil, nil, nil, 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] )
+        board.instance_variable_set(:@board, [[nil, nil, nil, nil, nil, 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]])
         expect(board.legal_move?(1)).to be(true)
       end
     end
   end
 end
+  # describe "#place_token" do
+  #   context 'when a column is selected, insert token' do
+  #     it 'inserts "X" token in column 0, row 5' do
+  #       expect { board.place_token(0) }.to change { board.board[0].last }.to('X')
+  #     end
+  #     let(:column) { double(column: [[nil, 'X', 'X', 'X', 'X', 'X']]) }
+  #     subject(:column_almost_full) { described_class.new(column) }
+  #     it 'inserts "X" token in column 0, row 0 when row 1-5 are full' do
+  #       expect { board.place_token(0) }.to change { column_almost_full.board[0].first }.to('X')
+  #     end
+  #     # let(:almost_full_column) { double(:board, [[nil, 'X', 'X', 'X', 'X', 'X']])}
+  #     # it 'expect all rows to be "X" when token placed and rows 1-5 are full' do
+  #     #   expect(board.board[0].all?('X')).to be(true)
+  #     #   board.place_token(0)
+  #   end
+  # end
