@@ -26,4 +26,9 @@ class Board
     end
     print board_to_print
   end
+
+  def legal_move?(column)
+    return true if @board[column].first.nil?
+    false
+  end
 end

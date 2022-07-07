@@ -7,7 +7,7 @@ describe Board do
   describe '#create_board' do
     context 'when called creates a new board' do
       it 'creates a board' do
-        new_board = [[nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [ nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]]
+        new_board = [[nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]]
         expect(board.create_board).to eq(new_board)
       end
     end
@@ -26,10 +26,25 @@ describe Board do
       end
     end
   end
-#   describe '#legal_move?' do
-#     context 'when a column selected, checks if column full' do
-#       before do
-#         board.instance_variable_set(:@board, )
-#       it 'returns false, when column full' do
-
+  describe '#legal_move?' do
+    context 'when a column selected, checks if column full' do
+      before do
+        board.instance_variable_set(:@board, [['X', 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] )
+      end
+      it 'return false if column 0 full' do
+        expect(board.legal_move?(0)).to be(false)
+      end
+      it 'return true if column 1 has no tokens' do
+        expect(board.legal_move?(1)).to be(true)
+      end
+      it 'returns true if column 0 has a single nil' do
+        board.instance_variable_set(:@board, [[nil, 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] )
+        expect(board.legal_move?(1)).to be(true)
+      end
+      it 'returns true if column 0 has 5 nil and a single other token' do
+        board.instance_variable_set(:@board, [[nil, nil, nil, nil, nil, 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] )
+        expect(board.legal_move?(1)).to be(true)
+      end
+    end
+  end
 end
