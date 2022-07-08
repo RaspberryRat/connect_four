@@ -46,4 +46,15 @@ describe Game do
       end
     end
   end
+  describe '#play_game' do
+    context 'when new game, expect play_game to call #create_players' do
+      subject(:new_game_for_script) { described_class.new(board) }
+      let(:board) { 'a board' }
+      it 'calls #create_players' do
+        game.instance_variable_set(:@player1, nil)
+        expect(new_game_for_script).to receive(:create_players).once
+        new_game_for_script.play_game
+      end
+    end
+  end
 end

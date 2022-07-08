@@ -19,4 +19,10 @@ class Game
     @player1 = Player.new(self, ask_name, 1)
     @player2 = Player.new(self, ask_name, 2)
   end
+  
+  def play_game
+    create_players if @player1.nil?
+  end
+
+
 end
