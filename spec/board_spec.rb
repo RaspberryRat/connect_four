@@ -28,21 +28,25 @@ describe Board do
   end
   describe '#legal_move?' do
     context 'when a column selected, checks if column full' do
+      subject(:full) { described_class.new(full_column) }
+      let(:full_column) { [['X', 'X', 'X', 'X', 'X', 'X']] }
       it 'return false if column 0 full' do
-        board.instance_variable_set(:@board, [['X', 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]])
-        expect(board.legal_move?(0)).to be(false)
+        expect(full.legal_move?(0)).to be(false)
       end
+      subject(:two_col_second_empty) { described_class.new(two_columns) }
+      let(:two_columns) { [['X', 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil]] }
       it 'return true if column 1 has no tokens' do
-        board.instance_variable_set(:@board, [['X', 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]])
-        expect(board.legal_move?(1)).to be(true)
+        expect(two_col_second_empty.legal_move?(1)).to be(true)
       end
+      subject(:one_empty_spot) { described_class.new(one_empty_column) }
+      let(:one_empty_column) { [[nil, 'X', 'X', 'X', 'X', 'X']] }
       it 'returns true if column 0 has a single nil' do
-        board.instance_variable_set(:@board, [[nil, 'X', 'X', 'X', 'X', 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]])
-        expect(board.legal_move?(1)).to be(true)
+        expect(one_empty_spot.legal_move?(0)).to be(true)
       end
+      subject(:single_token) { described_class.new(one_token) }
+      let(:one_token) { [[nil, nil, nil, nil, nil, 'X']] }
       it 'returns true if column 0 has 5 nil and a single other token' do
-        board.instance_variable_set(:@board, [[nil, nil, nil, nil, nil, 'X'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]])
-        expect(board.legal_move?(1)).to be(true)
+        expect(single_token.legal_move?(0)).to be(true)
       end
     end
   end
@@ -51,24 +55,22 @@ describe Board do
       it 'inserts "X" token in column 0, row 5' do
         expect { board.place_token(0) }.to change { board.board[0].last }.to('X')
       end
+      subject(:one_empty_spot) { described_class.new(one_empty_column) }
+      let(:one_empty_column) { [[nil, 'X', 'X', 'X', 'X', 'X']] }
       it 'inserts "X" token in column 0, row 0 when row 1-5 are full' do
-        board.instance_variable_set(:@board, [[nil, 'X', 'X', 'X', 'X', 'X']])
-        expect { board.place_token(0) }.to change { board.board[0][0] }.to('X')
+        expect { one_empty_spot.place_token(0) }.to change { one_empty_spot.board[0][0] }.to('X')
       end
-      let(:almost_full_column) { double(:board, [[nil, 'X', 'X', 'X', 'X', 'X']])}
+      subject(:one_empty_spot) { described_class.new(one_empty_column) }
+      let(:one_empty_column) { [[nil, 'X', 'X', 'X', 'X', 'X']] }
       it 'expect all rows to be "X" when token placed and rows 1-5 are full' do
-        board.instance_variable_set(:@board, [[nil, 'X', 'X', 'X', 'X', 'X']])
-        board.place_token(0)
-        expect(board.board[0].all?('X')).to be(true)
+        one_empty_spot.place_token(0)
+        expect(one_empty_spot.board[0].all?('X')).to be(true)
       end
+      subject(:three_empty_spots) { described_class.new(column) }
+      let(:column) { [[nil, nil, nil, 'X', 'X', 'X']] }
       it 'expect row 2 to change when token already in row 3-5' do
-        board.instance_variable_set(:@board, [[nil, nil, nil, 'X', 'X', 'X']])
-        expect { board.place_token(0) }.to change { board.board[0][2] }.to('X')
+        expect { three_empty_spots.place_token(0) }.to change { three_empty_spots.board[0][2] }.to('X')
       end
     end
   end
 end
-#TODO Try this  instead of instance varialbe set
-# subject(:one_empty_spot { described_class.new(column) }
-
-# let(:column) { [[nil, 'X', 'X', 'etc.']] }
