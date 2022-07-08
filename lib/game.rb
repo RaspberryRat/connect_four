@@ -10,13 +10,15 @@ class Game
 
   attr_accessor :player1, :player2
 
+  def ask_name
+    puts "You are #{@player1.nil? ? 'Player 1' : 'Player 2'}. What is your name?"
+    gets.chomp.strip
+  end
+
   def create_players
     @player1 = Player.new(self, ask_name, 1)
     @player2 = Player.new(self, ask_name, 2)
   end
-
-  def ask_name
-    puts "You are #{@player.nil? ? 'Player 1' : 'Player 2'}. What is your name?"
-    gets.chomp.strip
-  end
+  
 end
+Game.new
