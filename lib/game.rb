@@ -19,6 +19,4 @@ class Game
     @player1 = Player.new(self, ask_name, 1)
     @player2 = Player.new(self, ask_name, 2)
   end
-  
 end
-Game.new

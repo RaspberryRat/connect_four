@@ -21,9 +21,8 @@ describe Game do
         game.ask_name
       end
       it 'expect puts with message for Player 2' do
-        game.instance_variable_set(:@player2, nil)
         game.instance_variable_set(:@player1, 'player1')
-        message = 'You are Player 1. What is your name?'
+        message = 'You are Player 2. What is your name?'
         expect(game).to receive(:puts).with(message)
         game.ask_name
       end
@@ -34,10 +33,10 @@ describe Game do
       subject(:new_game) { described_class.new(board) }
       let(:board) { 'a_board' }
       it 'expect @player1 to be nil before method called' do
-        expect(@player1).to be_nil
+        expect(new_game.player1).to be_nil
       end
       it 'expect @player2 to be nil before method called' do
-        expect(@player2).to be_nil
+        expect(new_game.player2).to be_nil
       end
       it 'expect #create_players to change @player1' do
         expect { new_game.create_players }.to change { new_game.player1 }
