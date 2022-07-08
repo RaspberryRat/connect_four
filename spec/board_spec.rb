@@ -68,3 +68,7 @@ describe Board do
     end
   end
 end
+#TODO Try this  instead of instance varialbe set
+# subject(:one_empty_spot { described_class.new(column) }
+
+# let(:column) { [[nil, 'X', 'X', 'etc.']] }
