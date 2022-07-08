@@ -19,10 +19,23 @@ class Game
     @player1 = Player.new(self, ask_name, 1)
     @player2 = Player.new(self, ask_name, 2)
   end
-  
+
   def play_game
     create_players if @player1.nil?
+    puts 'Enter the column number to place your marker'
+    choice = player_input(1, 7)
   end
 
+  def player_input(min, max)
+    loop do
+      choice = gets.chomp.to_i
+      return choice if verify_input(min, max, choice)
 
+      puts 'Input Error, you must enter a number between 1 and 7'
+    end
+  end
+
+  def verify_input(min, max, input)
+    return input if input.between?(min, max)
+  end
 end

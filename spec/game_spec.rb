@@ -51,9 +51,54 @@ describe Game do
       subject(:new_game_for_script) { described_class.new(board) }
       let(:board) { 'a board' }
       it 'calls #create_players' do
+        allow(new_game_for_script).to receive(:player_input)
         game.instance_variable_set(:@player1, nil)
         expect(new_game_for_script).to receive(:create_players).once
         new_game_for_script.play_game
+      end
+    end
+  end
+  describe '#player_input' do
+    subject(:game_input) { described_class.new(board) }
+    let(:board) { 'a board' }
+    context 'when a user inputs correct value' do  
+      before do
+      valid_input = '3'
+      allow(game_input).to receive(:gets).and_return(valid_input)
+      end
+      it 'stops loop and doesnt display error message' do
+        min = 1
+        max = 7
+        error_message = 'Input Error, you must enter a number between 1 and 7'
+        expect(game_input).not_to receive(:puts).with(error_message)
+        game_input.player_input(min, max)
+      end
+    end
+    context 'when user inputs an incorrect value, then correct value' do
+      before do
+        valid_input = '3'
+        invalid_input = '11'
+        allow(game_input).to receive(:gets).and_return(invalid_input, valid_input)
+        end
+      it 'doesnt stop the loop and displays an error message' do
+        min = 1
+        max = 7
+        error_message = 'Input Error, you must enter a number between 1 and 7'
+        expect(game_input).to receive(:puts).with(error_message).once
+        game_input.player_input(min, max)
+      end
+    end
+  end
+  describe '#verify_input' do
+    subject(:player_input) { described_class.new(board) }
+    let(:board) { 'a board' }
+    context 'when given a valid input' do
+      it 'returns valid input' do
+        valid_input = 3
+        min = 1
+        max = 7
+        verified_input = player_input.verify_input(min, max, valid_input)
+        expect(verified_input).to eq(valid_input)
       end
     end
   end
