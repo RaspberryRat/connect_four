@@ -55,6 +55,8 @@ describe Game do
 
       before do
         allow(board).to receive(:draw_board)
+        allow(board).to receive(:legal_move?)
+        allow(new_game_for_script).to receive(:verify_choice).and_return(true)
       end
 
       it 'calls #create_players' do
@@ -144,5 +146,39 @@ describe Game do
       expect(play_game).to receive(:play_game).and_return("the game board")
       play_game.play_game
     end
+  end
+
+  describe '#verify_choice' do
+    subject(:player_choice) { described_class.new(legal_board)}
+    let(:legal_board) { double('legal_board') }
+
+    context 'when player inputs legal column choice' do
+      before do
+        valid_choice = 1
+        allow(player_choice).to receive(:gets).and_return(valid_choice)
+        allow(legal_board).to receive(:legal_move?).with(valid_choice).and_return(true)
+      end
+      it 'completes loop' do
+        valid_choice = 1
+        error_message = "Column #{valid_choice} is full, you must choose a different column."
+        expect(player_choice).to_not receive(:puts).with(error_message)
+        player_choice.verify_choice(valid_choice)
+      end
+    end
+
+    context 'when player inputs an invalid column choice' do
+      before do
+        invalid_choice = 2
+        allow(player_choice).to receive(:gets).and_return(invalid_choice)
+        allow(legal_board).to receive(:legal_move?).with(invalid_choice).and_return(false)
+      end
+      it 'displays error message loop' do
+        invalid_choice = 2
+        error_message = "Column #{invalid_choice} is full, you must choose a different column."
+        expect(player_choice).to receive(:puts).with(error_message).once
+        player_choice.verify_choice(invalid_choice)
+      end
+    end
+
   end
 end

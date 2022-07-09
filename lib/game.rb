@@ -26,6 +26,7 @@ class Game
     puts 'Enter the column number to place your marker'
     @game_board.draw_board
     choice = player_input(1, 7)
+    return play_game unless verify_choice(choice)
   end
 
   def player_input(min, max)
@@ -39,5 +40,12 @@ class Game
 
   def verify_input(min, max, input)
     return input if input.between?(min, max)
+  end
+
+  def verify_choice(choice)
+    return if @game_board.legal_move?(choice)
+
+    puts "Column #{choice} is full, you must choose a different column."
+    false
   end
 end
