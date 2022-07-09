@@ -26,7 +26,6 @@ class Game
     puts 'Enter the column number to place your marker'
     @game_board.draw_board
     choice = player_input(1, 7)
-
   end
 
   def player_input(min, max)

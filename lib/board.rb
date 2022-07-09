@@ -32,11 +32,9 @@ class Board
     false
   end
 
-  def place_token(column)
+  def place_token(column, marker)
     result = []
     board[column].each_with_index { |row, index| result << index if row.nil? }
-    board[column][result.last] = 'X'
+    board[column][result.last] = marker
   end
 end
-
-Board.new.draw_board
