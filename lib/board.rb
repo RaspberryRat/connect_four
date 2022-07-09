@@ -10,7 +10,8 @@ class Board
   end
 
   def draw_board
-    board_to_print = ''
+    board_to_print = "_____________________\n"
+
     row = 0
     board[0].length.times do
       board.map do |column|
@@ -19,6 +20,9 @@ class Board
       board_to_print += "\n"
       row += 1
     end
+    board_to_print += "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n"
+    board_to_print += " 1  2  3  4  5  6  7 "
+
     print board_to_print
   end
 
@@ -34,3 +38,5 @@ class Board
     board[column][result.last] = 'X'
   end
 end
+
+Board.new.draw_board

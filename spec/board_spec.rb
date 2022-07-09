@@ -15,12 +15,17 @@ describe Board do
   describe '#draw_board' do
     context 'when board is unplayed draws the current state of @board' do
       it 'draws @board to terminal' do
-        drawn_board = "|◯||◯||◯||◯||◯||◯||◯|\n" +
+        drawn_board = 
+        "_____________________\n" +
         "|◯||◯||◯||◯||◯||◯||◯|\n" +
         "|◯||◯||◯||◯||◯||◯||◯|\n" +
         "|◯||◯||◯||◯||◯||◯||◯|\n" +
         "|◯||◯||◯||◯||◯||◯||◯|\n" +
-        "|◯||◯||◯||◯||◯||◯||◯|\n"        
+        "|◯||◯||◯||◯||◯||◯||◯|\n" +
+        "|◯||◯||◯||◯||◯||◯||◯|\n" +
+        "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n" +
+        " 1  2  3  4  5  6  7 "
+
         expect(board).to receive(:print).with(drawn_board)
         board.draw_board
       end
