@@ -3,8 +3,7 @@ require_relative '../lib/game'
 describe Game do
   let(:game_board) { double('game_board') }
   subject(:game) { described_class.new(game_board) }
-  describe '#initialize' do
-  end
+ 
   describe '#ask_name' do
     context 'when players are created, ask for a Player\'s name' do
       it 'returns name as a string' do
@@ -12,6 +11,7 @@ describe Game do
         game.ask_name
       end
     end
+
     context 'When Players are created, should request to terminal' do
       it 'expect puts with message for Player 1' do
         game.instance_variable_set(:@player2, nil)
@@ -28,6 +28,7 @@ describe Game do
       end
     end
   end
+
   describe '#create_players' do
     context 'when players are nil, creates Player 1' do
       subject(:new_game) { described_class.new(board) }
@@ -46,6 +47,7 @@ describe Game do
       end
     end
   end
+
   describe '#play_game' do
     context 'when new game, expect play_game to call #create_players' do
       subject(:new_game_for_script) { described_class.new(board) }
@@ -58,13 +60,15 @@ describe Game do
       end
     end
   end
+
   describe '#player_input' do
     subject(:game_input) { described_class.new(board) }
     let(:board) { 'a board' }
-    context 'when a user inputs correct value' do  
+
+    context 'when a user inputs correct value, then correct value' do
       before do
-      valid_input = '3'
-      allow(game_input).to receive(:gets).and_return(valid_input)
+        valid_input = '3'
+        allow(game_input).to receive(:gets).and_return(valid_input)
       end
       it 'stops loop and doesnt display error message' do
         min = 1
@@ -74,12 +78,31 @@ describe Game do
         game_input.player_input(min, max)
       end
     end
+
+    context 'when a user inputs incorrect value 4 times, then correct value' do
+      before do
+        valid_input = '3'
+        invalid_input1 = '15'
+        invalid_input2 = '20'
+        invalid_input3 = '100'
+        invalid_input4 = '-1'
+        allow(game_input).to receive(:gets).and_return(invalid_input1, invalid_input2, invalid_input3, invalid_input4, valid_input)
+      end
+      it 'completes loop and display error message 4 times' do
+        min = 1
+        max = 7
+        error_message = 'Input Error, you must enter a number between 1 and 7'
+        expect(game_input).to receive(:puts).with(error_message).exactly(4).times
+        game_input.player_input(min, max)
+      end
+    end
+
     context 'when user inputs an incorrect value, then correct value' do
       before do
         valid_input = '3'
         invalid_input = '11'
         allow(game_input).to receive(:gets).and_return(invalid_input, valid_input)
-        end
+      end
       it 'doesnt stop the loop and displays an error message' do
         min = 1
         max = 7
@@ -89,6 +112,7 @@ describe Game do
       end
     end
   end
+
   describe '#verify_input' do
     subject(:player_input) { described_class.new(board) }
     let(:board) { 'a board' }
