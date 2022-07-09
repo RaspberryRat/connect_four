@@ -9,6 +9,7 @@ class Game
   end
 
   attr_accessor :player1, :player2
+  attr_reader :game_board
 
   def ask_name
     puts "You are #{@player1.nil? ? 'Player 1' : 'Player 2'}. What is your name?"
@@ -23,7 +24,9 @@ class Game
   def play_game
     create_players if @player1.nil?
     puts 'Enter the column number to place your marker'
+    @game_board.draw_board
     choice = player_input(1, 7)
+
   end
 
   def player_input(min, max)

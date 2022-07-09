@@ -51,7 +51,12 @@ describe Game do
   describe '#play_game' do
     context 'when new game, expect play_game to call #create_players' do
       subject(:new_game_for_script) { described_class.new(board) }
-      let(:board) { 'a board' }
+      let(:board) { double('board') }
+
+      before do
+        allow(board).to receive(:draw_board)
+      end
+
       it 'calls #create_players' do
         allow(new_game_for_script).to receive(:player_input)
         game.instance_variable_set(:@player1, nil)
@@ -124,6 +129,20 @@ describe Game do
         verified_input = player_input.verify_input(min, max, valid_input)
         expect(verified_input).to eq(valid_input)
       end
+    end
+  end
+
+  describe '.game_board.draw_board' do
+    subject(:play_game) { described_class.new(game_board) }
+    let(:game_board) { instance_double(Board) }
+
+    before do
+      allow(game_board).to receive(:draw_board).and_return("the game board")
+    end
+
+    it 'when turn loop starts calls draw board' do
+      expect(play_game).to receive(:play_game).and_return("the game board")
+      play_game.play_game
     end
   end
 end
