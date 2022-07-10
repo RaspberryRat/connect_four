@@ -52,7 +52,7 @@ describe Game do
     context 'when new game, expect play_game to call #create_players' do
       subject(:new_game_test_script) { described_class.new(board) }
       let(:board) { double('board') }
-      let(:current_player) { double('current_player') }
+      # let(:current_player) { double('current_player', value: 'X') }
 
       before do
         allow(board).to receive(:draw_board)

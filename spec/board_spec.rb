@@ -104,11 +104,29 @@ describe Board do
     subject(:check_for_winner) { described_class.new }
     context 'when a token is placed check for winner?' do
       it 'returns false if there are not 4 tokens in a row' do
+        allow(check_for_winner).to receive(:four_in_a_row?).and_return(false)
         expect(check_for_winner.winner?).to be false
       end
       it 'retrue true if a player has 4 tokens in a row' do
-        allow(check_for_winner).to receive(:four_in_a_row).and_return(true)
+        allow(check_for_winner).to receive(:four_in_a_row?).and_return(true)
         expect(check_for_winner.winner?).to be true
+      end
+    end
+  end
+
+  describe '#four_in_a_row?' do
+    subject(:not_a_win) { described_class.new }
+
+    context 'when there are not 4 markers of same colour in a row' do
+      it 'returns false' do
+        expect(not_a_win.four_in_a_row?).to be(false)
+      end
+    end
+    subject(:four_markers_one_column) { described_class.new(winning_board) }
+    let(:winning_board) { [[nil, nil, '🔴', '🔴', '🔴', '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+    context 'when there are 4 markers of same colour in same column' do
+      it 'returns true' do
+        expect(four_markers_one_column.four_in_a_row?).to be(true)
       end
     end
   end
