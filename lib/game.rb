@@ -29,6 +29,7 @@ class Game
     @game_board.draw_board
     choice = player_input(1, 7)
     return play_game unless verify_choice(choice)
+
     @game_board.place_token(choice, current_player.marker)
   end
 

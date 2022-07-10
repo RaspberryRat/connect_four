@@ -50,23 +50,23 @@ describe Game do
 
   describe '#play_game' do
     context 'when new game, expect play_game to call #create_players' do
-      subject(:new_game_for_script) { described_class.new(board) }
+      subject(:new_game_test_script) { described_class.new(board) }
       let(:board) { double('board') }
-      let(:current_player) { double('current_player') }
+      let(:current_player) { double('current_player', marker: 'X') }
 
       before do
         allow(board).to receive(:draw_board)
         allow(board).to receive(:legal_move?)
-        allow(new_game_for_script).to receive(:verify_choice).and_return(true)
-        allow(board).to receive(:marker)
+        allow(new_game_test_script).to receive(:verify_choice).and_return(true)
       end
-#TODO Working here to get play_game to work
+
       it 'calls #create_players' do
-        allow(new_game_for_script).to receive(:player_input)
-        allow(@current_player).to receive(:maker)
+        allow(new_game_test_script.current_player).to receive(:marker).and_return('X')
+        allow(board).to receive(:place_token).with(nil, 'X')
+        allow(new_game_test_script).to receive(:player_input)
         game.instance_variable_set(:@player1, nil)
-        expect(new_game_for_script).to receive(:create_players).once
-        new_game_for_script.play_game
+        expect(new_game_test_script).to receive(:create_players).once
+        new_game_test_script.play_game
       end
     end
   end
