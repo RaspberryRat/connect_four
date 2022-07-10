@@ -36,9 +36,20 @@ class Board
     result = []
     board[column].each_with_index { |row, index| result << index if row.nil? }
     board[column][result.last] = marker
+    return game_over if winner?
   end
 
   def winner?
+    return true if four_in_a_row
+
     false
   end
+
+  def four_in_a_row
+  end
+
+  def game_over
+    true
+  end
+  
 end

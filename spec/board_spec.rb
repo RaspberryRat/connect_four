@@ -78,13 +78,37 @@ describe Board do
         expect { three_empty_spots.place_token(0, marker) }.to change { three_empty_spots.board[0][2] }.to('🔴')
       end
     end
+    context 'when winner is true, returns game_over' do
+      subject(:game_over_win) { described_class.new } 
+      before do
+        allow(game_over_win).to receive(:winner?).and_return(true)
+      end
+      it 'call game_over and return true' do
+        expect(game_over_win).to receive(:game_over)
+        game_over_win.place_token(0, marker)
+      end
+    end
+    context 'when winner is false, does not game_over' do
+      subject(:not_game_over) { described_class.new }
+      before do
+        allow(not_game_over).to receive(:winner?).and_return(false)
+      end
+      it 'call game_over and return true' do
+        expect(not_game_over).to_not receive(:game_over)
+        not_game_over.place_token(0, marker)
+      end
+    end
   end
 
   describe "#winner?" do
-    let (:check_for_winner) { described_class.new }
+    subject(:check_for_winner) { described_class.new }
     context 'when a token is placed check for winner?' do
       it 'returns false if there are not 4 tokens in a row' do
         expect(check_for_winner.winner?).to be false
+      end
+      it 'retrue true if a player has 4 tokens in a row' do
+        allow(check_for_winner).to receive(:four_in_a_row).and_return(true)
+        expect(check_for_winner.winner?).to be true
       end
     end
   end

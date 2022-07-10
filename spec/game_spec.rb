@@ -42,7 +42,7 @@ describe Game do
       it 'expect #create_players to change @player1' do
         expect { new_game.create_players }.to change { new_game.player1 }
       end
-      it 'expect #crete_players to change @player2' do
+      it 'expect #create_players to change @player2' do
         expect { new_game.create_players }.to change { new_game.player2 }
       end
     end
@@ -52,7 +52,7 @@ describe Game do
     context 'when new game, expect play_game to call #create_players' do
       subject(:new_game_test_script) { described_class.new(board) }
       let(:board) { double('board') }
-      let(:current_player) { double('current_player', marker: 'X') }
+      let(:current_player) { double('current_player') }
 
       before do
         allow(board).to receive(:draw_board)
@@ -152,7 +152,7 @@ describe Game do
   end
 
   describe '#verify_choice' do
-    subject(:player_choice) { described_class.new(legal_board)}
+    subject(:player_choice) { described_class.new(legal_board) }
     let(:legal_board) { double('legal_board') }
 
     context 'when player inputs legal column choice' do
