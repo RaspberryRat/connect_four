@@ -6,9 +6,10 @@ class Game
     @game_board = board
     @player1 = nil
     @player2 = nil
+    @current_player = nil
   end
 
-  attr_accessor :player1, :player2
+  attr_accessor :player1, :player2, :current_player
   attr_reader :game_board
 
   def ask_name
@@ -19,6 +20,7 @@ class Game
   def create_players
     @player1 = Player.new(self, ask_name, 1)
     @player2 = Player.new(self, ask_name, 2)
+    @current_player = @player1
   end
 
   def play_game
@@ -27,6 +29,7 @@ class Game
     @game_board.draw_board
     choice = player_input(1, 7)
     return play_game unless verify_choice(choice)
+    @game_board.place_token(choice, current_player.marker)
   end
 
   def player_input(min, max)
