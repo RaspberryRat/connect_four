@@ -1,3 +1,4 @@
+require 'pry-byebug'
 class Board
   def initialize(board = create_board)
     @board = board
@@ -40,12 +41,48 @@ class Board
   end
 
   def winner?
-    return true if four_in_a_row
+    return true if four_in_a_row?
 
     false
   end
 
-  def four_in_a_row
+  def four_in_a_row?
+    marker1 = '🔴'
+    marker2 = '🟡'
+    result = []
+
+    # to find four markers in same column
+    board.each do |column|
+      i = 0
+      3.times do
+        result << column if column[i..i + 3].all? { |m| m == marker1 || m == marker2 }
+        i += 1
+      end
+    end
+
+    return true unless result.empty?
+
+    # to find four markers in same row
+    row = 0
+    row_array = []
+    result = []
+    i = 0
+    board[0].length.times do
+      board.map do |column|
+        row_array << column[row]
+      end
+      i = 0
+      3.times do
+        result << row_array if row_array[i..i + 3].all? { |m| m == marker1 || m == marker2 }
+        i += 1
+      end
+      row += 1
+      row_array = []
+    end
+
+    return true unless result.empty?
+
+    false
   end
 
   def game_over
