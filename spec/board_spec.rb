@@ -80,4 +80,12 @@ describe Board do
     end
   end
 
+  describe "#winner?" do
+    let (:check_for_winner) { described_class.new }
+    context 'when a token is placed check for winner?' do
+      it 'returns false if there are not 4 tokens in a row' do
+        expect(check_for_winner.winner?).to be false
+      end
+    end
+  end
 end

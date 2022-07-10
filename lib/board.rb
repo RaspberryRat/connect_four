@@ -37,4 +37,8 @@ class Board
     board[column].each_with_index { |row, index| result << index if row.nil? }
     board[column][result.last] = marker
   end
+
+  def winner?
+    false
+  end
 end
