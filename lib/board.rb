@@ -51,6 +51,7 @@ class Board
     marker2 = '🟡'
     result = []
 
+    # to find four markers in same column
     board.each do |column|
       i = 0
       3.times do
@@ -58,7 +59,29 @@ class Board
         i += 1
       end
     end
+
     return true unless result.empty?
+
+    # to find four markers in same row
+    row = 0
+    row_array = []
+    result = []
+    i = 0
+    board[0].length.times do
+      board.map do |column|
+        row_array << column[row]
+      end
+      i = 0
+      3.times do
+        result << row_array if row_array[i..i + 3].all? { |m| m == marker1 || m == marker2 }
+        i += 1
+      end
+      row += 1
+      row_array = []
+    end
+
+    return true unless result.empty?
+
     false
   end
 
