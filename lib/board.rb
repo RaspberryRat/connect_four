@@ -47,7 +47,6 @@ class Board
   end
 
   def four_in_a_row?
-    binding.pry
     marker1 = '🔴'
     marker2 = '🟡'
     result = []

@@ -144,47 +144,45 @@ describe Board do
   describe '#four_in_a_row?' do
     context 'when there are not 4 markers of same colour in a row' do
 
-      subject(:not_a_win) { described_class.new(board) }
-      let(:board) { 'nothing' }
+      subject(:not_a_win) { described_class.new }
 
       it 'returns false' do
-        expect(not_a_win).to be(false)
-        not_a_win.four_in_a_row?
+        result = not_a_win.four_in_a_row?
+        expect(result).to be(false)
       end
     end
 
-    # context 'when there are 4 markers of same colour in same column' do
+    context 'when there are 4 markers of same colour in same column' do
 
-    #   subject(:four_markers_one_column) { described_class.new(winning_board_column) }
-    #   let(:winning_board_column) { [[nil, nil, '🔴', '🔴', '🔴', '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+      subject(:four_markers_one_column) { described_class.new(winning_board_column) }
+      let(:winning_board_column) { [[nil, nil, '🔴', '🔴', '🔴', '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
 
-    #   it 'returns true' do
-    #     expect(four_markers_one_column).to be(true)
-    #     four_markers_one_column.four_in_a_row?
-    #   end
-    # end
+      it 'returns true' do
+        result = four_markers_one_column.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
 
+    context 'when there are 4 markers of same colour in same column' do
 
-    # context 'when there are 4 markers of same colour in same column' do
+      subject(:four_markers_four_row_line) { described_class.new(winning_board_rows) }
+      let(:winning_board_rows) { [[nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
 
-    #   subject(:four_markers_four_row_line) { described_class.new(winning_board_rows) }
-    #   let(:winning_board_rows) { [[nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+      it 'returns true' do
+        result = four_markers_four_row_line.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
 
-    #   it 'returns true' do
-    #     expect(four_markers_four_row_line).to be(true)
-    #     four_markers_four_row_line.four_in_a_row?
-    #   end
-    # end
+    context 'when there are four markers in downward diagonal' do
 
-    # context 'when there are four markers in downward diagonal' do
+      subject(:four_makers_down_diagonal) { described_class.new(win_downward_diagonal) }
+      let(:win_downward_diagonal) { [[nil, nil, '🔴', nil, nil, nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, nil, nil, '🔴', nil], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
 
-    #   subject(:four_makers_down_diagonal) { described_class.new(win_downward_diagonal) }
-    #   let(:win_downward_diagonal) { [[nil, nil, '🔴', nil, nil, nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, nil, nil, '🔴', nil], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
-
-    #   it 'returns true' do
-    #     expect(four_makers_down_diagonal).to be(true)
-    #     four_makers_down_diagonal.four_in_a_row?
-    #   end
-    # end
+      it 'returns true' do
+        result = four_makers_down_diagonal.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
   end
 end
