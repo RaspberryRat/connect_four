@@ -184,5 +184,16 @@ describe Board do
         expect(result).to be(true)
       end
     end
+
+    context 'when four markers decending diagonal but end in colum index 6' do
+
+      subject(:four_makers_down_diagonal) { described_class.new(column_index_6_diag) }
+      let(:column_index_6_diag) { [[nil, nil, nil,nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, '🔴', nil, nil, nil], [nil, nil, '🔴', nil, nil, nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, nil, nil, '🔴', nil], [nil, nil, nil, nil, nil, '🔴']] }
+
+      it 'returns true' do
+        result = four_makers_down_diagonal.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
   end
 end
