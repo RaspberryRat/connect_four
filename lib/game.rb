@@ -2,11 +2,11 @@ require_relative 'board'
 require_relative 'player'
 
 class Game
-  def initialize(board = Board.new)
+  def initialize(board = Board.new, current_player = nil)
     @game_board = board
+    @current_player = current_player
     @player1 = nil
     @player2 = nil
-    @current_player = nil
   end
 
   attr_accessor :player1, :player2, :current_player
