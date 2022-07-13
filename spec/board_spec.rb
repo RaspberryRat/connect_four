@@ -56,43 +56,70 @@ describe Board do
     end
   end
   describe "#place_token" do
+
     let(:marker) { '🔴' }
     context 'when a column is selected, insert token' do
-      it 'inserts "X" token in column 0, row 5' do
-        expect { board.place_token(0, marker) }.to change { board.board[0].last }.to('🔴')
+      
+      subject(:the_board) { described_class.new }
+      before do
+        allow(the_board).to receive(:winner?).and_return(false)
       end
+
+      it 'inserts "X" token in column 0, row 5' do
+        expect { the_board.place_token(0, marker) }.to change { the_board.board[0].last }.to('🔴')
+      end
+
       subject(:one_empty_spot) { described_class.new(one_empty_column) }
       let(:one_empty_column) { [[nil, '🔴', '🔴', '🔴', '🔴', '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+
+      before do
+        allow(one_empty_spot).to receive(:winner?).and_return(false)
+      end
+
       it 'inserts "X" token in column 0, row 0 when row 1-5 are full' do
         expect { one_empty_spot.place_token(0, marker) }.to change { one_empty_spot.board[0][0] }.to('🔴')
       end
-      subject(:one_empty_spot) { described_class.new(one_empty_column) }
-      let(:one_empty_column) { [[nil, '🔴', '🔴', '🔴', '🔴', '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+
+
       it 'expect all rows to be "X" when token placed and rows 1-5 are full' do
         one_empty_spot.place_token(0, marker)
         expect(one_empty_spot.board[0].all?('🔴')).to be(true)
       end
+
       subject(:three_empty_spots) { described_class.new(column) }
       let(:column) { [[nil, nil, nil, '🔴', '🔴', '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+
+      before do
+        allow(three_empty_spots).to receive(:winner?).and_return(false)
+      end
+
       it 'expect row 2 to change when token already in row 3-5' do
         expect { three_empty_spots.place_token(0, marker) }.to change { three_empty_spots.board[0][2] }.to('🔴')
       end
     end
+
     context 'when winner is true, returns game_over' do
-      subject(:game_over_win) { described_class.new } 
+
+      subject(:game_over_win) { described_class.new }
+
       before do
         allow(game_over_win).to receive(:winner?).and_return(true)
       end
+
       it 'call game_over and return true' do
         expect(game_over_win).to receive(:game_over)
         game_over_win.place_token(0, marker)
       end
     end
+
     context 'when winner is false, does not game_over' do
+
       subject(:not_game_over) { described_class.new }
+
       before do
         allow(not_game_over).to receive(:winner?).and_return(false)
       end
+
       it 'call game_over and return true' do
         expect(not_game_over).to_not receive(:game_over)
         not_game_over.place_token(0, marker)
@@ -107,7 +134,7 @@ describe Board do
         allow(check_for_winner).to receive(:four_in_a_row?).and_return(false)
         expect(check_for_winner.winner?).to be false
       end
-      it 'retrue true if a player has 4 tokens in a row' do
+      it 'returns true if a player has 4 tokens in a row' do
         allow(check_for_winner).to receive(:four_in_a_row?).and_return(true)
         expect(check_for_winner.winner?).to be true
       end
@@ -115,27 +142,57 @@ describe Board do
   end
 
   describe '#four_in_a_row?' do
-    subject(:not_a_win) { described_class.new }
-
     context 'when there are not 4 markers of same colour in a row' do
+
+      subject(:not_a_win) { described_class.new }
+
       it 'returns false' do
-        expect(not_a_win.four_in_a_row?).to be(false)
+        result = not_a_win.four_in_a_row?
+        expect(result).to be(false)
       end
     end
 
-    subject(:four_markers_one_column) { described_class.new(winning_board_column) }
-    let(:winning_board_column) { [[nil, nil, '🔴', '🔴', '🔴', '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
     context 'when there are 4 markers of same colour in same column' do
+
+      subject(:four_markers_one_column) { described_class.new(winning_board_column) }
+      let(:winning_board_column) { [[nil, nil, '🔴', '🔴', '🔴', '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+
       it 'returns true' do
-        expect(four_markers_one_column.four_in_a_row?).to be(true)
+        result = four_markers_one_column.four_in_a_row?
+        expect(result).to be(true)
       end
     end
 
-    subject(:four_markers_four_row_line) { described_class.new(winning_board_rows) }
-    let(:winning_board_rows) { [[nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
     context 'when there are 4 markers of same colour in same column' do
+
+      subject(:four_markers_four_row_line) { described_class.new(winning_board_rows) }
+      let(:winning_board_rows) { [[nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+
       it 'returns true' do
-        expect(four_markers_four_row_line.four_in_a_row?).to be(true)
+        result = four_markers_four_row_line.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+
+    context 'when there are four markers in downward diagonal' do
+
+      subject(:four_makers_down_diagonal) { described_class.new(win_downward_diagonal) }
+      let(:win_downward_diagonal) { [[nil, nil, '🔴', nil, nil, nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, nil, nil, '🔴', nil], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+
+      it 'returns true' do
+        result = four_makers_down_diagonal.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+
+    context 'when four markers decending diagonal but end in colum index 6' do
+
+      subject(:four_makers_down_diagonal) { described_class.new(column_index_6_diag) }
+      let(:column_index_6_diag) { [[nil, nil, nil,nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, '🔴', nil, nil, nil], [nil, nil, '🔴', nil, nil, nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, nil, nil, '🔴', nil], [nil, nil, nil, nil, nil, '🔴']] }
+
+      it 'returns true' do
+        result = four_makers_down_diagonal.four_in_a_row?
+        expect(result).to be(true)
       end
     end
   end

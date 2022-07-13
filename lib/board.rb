@@ -80,6 +80,45 @@ class Board
       row_array = []
     end
 
+    # finds four markers on a descending diagonal, except in column index 6
+    row = 0
+    diagonal_array = []
+    dia_row = 0
+    board[0].length.times do
+      board.map do |column|
+        diagonal_array << column[dia_row]
+        dia_row += 1
+        break if dia_row >= 6
+      end
+      i = 0
+      3.times do
+        break if i + 3 > diagonal_array.length
+    
+        result << diagonal_array if diagonal_array[i..i + 3].all? { |m| m == marker1 || m == marker2 }
+        i += 1
+      end
+      row += 1
+      dia_row = row
+      diagonal_array = []
+    end
+
+    # finds four markers on descending diagonal if end in column index 6
+    row = 0
+    dia_row = 0
+    diagonal_array = []
+    3.times do
+      column = 3
+      4.times do
+        diagonal_array << board[column][dia_row]
+        column += 1
+        dia_row += 1
+      end
+      result << diagonal_array if diagonal_array.all? { |m| m == marker1 || m == marker2 }
+      row += 1
+      dia_row = row
+      diagonal_array = []
+    end
+
     return true unless result.empty?
 
     false
