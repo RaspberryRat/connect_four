@@ -51,7 +51,25 @@ class Board
     marker2 = '🟡'
     result = []
 
-    # to find four markers in same column
+    return true if same_column?(marker1, marker2)
+
+    return true if same_row?(marker1, marker2)
+
+    return true if descending_diagonal?(marker1, marker2)
+
+    return true if ascending_diagonal?(marker1, marker2)
+
+    false
+  end
+
+  def game_over
+    true
+  end
+
+  private
+
+  # to find four markers in same column
+  def same_column?(marker1, marker2, result = [])
     board.each do |column|
       i = 0
       3.times do
@@ -59,13 +77,15 @@ class Board
         i += 1
       end
     end
-
     return true unless result.empty?
 
-    # to find four markers in same row
+    false
+  end
+
+  # to find four markers in same row
+  def same_row?(marker1, marker2, result = [])
     row = 0
     row_array = []
-    result = []
     i = 0
     board[0].length.times do
       board.map do |column|
@@ -79,8 +99,13 @@ class Board
       row += 1
       row_array = []
     end
+    return true unless result.empty?
 
-    # finds four markers on a descending diagonal, except in column index 6
+    false
+  end
+
+  # finds four markers on a descending diagonal, except in column index 6
+  def descending_diagonal?(marker1, marker2, result = [])
     row = 0
     diagonal_array = []
     dia_row = 0
@@ -93,16 +118,22 @@ class Board
       i = 0
       3.times do
         break if i + 3 > diagonal_array.length
-    
+
         result << diagonal_array if diagonal_array[i..i + 3].all? { |m| m == marker1 || m == marker2 }
         i += 1
       end
-      row += 1
-      dia_row = row
-      diagonal_array = []
+    row += 1
+    dia_row = row
+    diagonal_array = []
     end
+    result = column6_descending_diagonal(marker1, marker2) if result.empty?
+    return true unless result.empty?
 
-    # finds four markers on descending diagonal if end in column index 6
+    false
+  end
+
+  # finds four markers on descending diagonal if end in column index 6
+  def column6_descending_diagonal(marker1, marker2, result = [])
     row = 0
     dia_row = 0
     diagonal_array = []
@@ -118,14 +149,54 @@ class Board
       dia_row = row
       diagonal_array = []
     end
+    result
+  end
 
+  # finds four markers on ascending diagonal
+  def ascending_diagonal?(marker1, marker2, result = [])
+    row = 5
+    diagonal_array = []
+    dia_row = 5
+    board[0].length.times do
+      board.map do |column|
+        diagonal_array << column[dia_row]
+        dia_row -= 1
+        break if dia_row.negative?
+      end
+      i = 0
+      3.times do
+        break if i + 3 > diagonal_array.length
+
+        result << diagonal_array if diagonal_array[i..i + 3].all? { |m| m == marker1 || m == marker2 }
+        i += 1
+      end
+      row -= 1
+      dia_row = row
+      diagonal_array = []
+    end
+    result = column6_ascending_diagonal?(marker1, marker2) if result.empty?
     return true unless result.empty?
 
     false
   end
 
-  def game_over
-    true
+  # finds four markers on ascending diagonal that end in column index 6
+  def column6_ascending_diagonal?(marker1, marker2, result = [])
+    row = 5
+    dia_row = 5
+    diagonal_array = []
+    3.times do
+      column = 3
+      4.times do
+        diagonal_array << board[column][dia_row]
+        column += 1
+        dia_row -= 1
+      end
+      result << diagonal_array if diagonal_array.all? { |m| m == marker1 || m == marker2 }
+      row -= 1
+      dia_row = row
+      diagonal_array = []
+    end
+    result
   end
-  
 end

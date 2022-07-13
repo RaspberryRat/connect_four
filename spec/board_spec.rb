@@ -174,7 +174,7 @@ describe Board do
       end
     end
 
-    context 'when there are four markers in downward diagonal' do
+    context 'when there are four markers in decending diagonal' do
 
       subject(:four_makers_down_diagonal) { described_class.new(win_downward_diagonal) }
       let(:win_downward_diagonal) { [[nil, nil, '🔴', nil, nil, nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, nil, nil, '🔴', nil], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
@@ -195,5 +195,94 @@ describe Board do
         expect(result).to be(true)
       end
     end
+
+    context 'when there are four markers in ascending diagonal' do
+
+      subject(:four_makers_up_diagonal) { described_class.new(win_ascending_diagonal) }
+      let(:win_ascending_diagonal) { [[nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, '🔴', nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, '🔴', nil, nil, nil,], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+
+      it 'returns true' do
+        result = four_makers_up_diagonal.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+
+    context 'when four markers in ascending diagonal end in colum index 6' do
+
+      subject(:four_makers_up_diagonal) { described_class.new(column_index_6_diag) }
+      let(:column_index_6_diag) { [[nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, '🔴', nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, '🔴', nil, nil, nil], [nil, '🔴', nil, nil, nil, nil]] }
+
+      it 'returns true' do
+        result = four_makers_up_diagonal.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+  
+    context 'when there are 4 yellow markers in same column' do
+
+      subject(:four_markers_one_column) { described_class.new(winning_board_column) }
+      let(:winning_board_column) { [[nil, nil, '🟡', '🟡', '🟡', '🟡'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+    
+      it 'returns true' do
+        result = four_markers_one_column.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+    
+    context 'when there are 4  markers in same column' do
+    
+      subject(:four_markers_four_row_line) { described_class.new(winning_board_rows) }
+      let(:winning_board_rows) { [[nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+    
+      it 'returns true' do
+        result = four_markers_four_row_line.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+    
+    context 'when there are four of yellow markers in decending diagonal' do
+    
+      subject(:four_makers_down_diagonal) { described_class.new(win_downward_diagonal) }
+      let(:win_downward_diagonal) { [[nil, nil, '🟡', nil, nil, nil], [nil, nil, nil, '🟡', nil, nil], [nil, nil, nil, nil, '🟡', nil], [nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+    
+      it 'returns true' do
+        result = four_makers_down_diagonal.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+    
+    context 'when four yellow markers decending diagonal end in colum index 6' do
+    
+      subject(:four_makers_down_diagonal) { described_class.new(column_index_6_diag) }
+      let(:column_index_6_diag) { [[nil, nil, nil,nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, '🟡', nil, nil, nil], [nil, nil, '🟡', nil, nil, nil], [nil, nil, nil, '🟡', nil, nil], [nil, nil, nil, nil, '🟡', nil], [nil, nil, nil, nil, nil, '🟡']] }
+    
+      it 'returns true' do
+        result = four_makers_down_diagonal.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+    
+    context 'when there are four yellow markers in ascending diagonal' do
+    
+      subject(:four_makers_up_diagonal) { described_class.new(win_ascending_diagonal) }
+      let(:win_ascending_diagonal) { [[nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, '🟡', nil], [nil, nil, nil, '🟡', nil, nil], [nil, nil, '🟡', nil, nil, nil,], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+    
+      it 'returns true' do
+        result = four_makers_up_diagonal.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+    
+    context 'when four yellow markers in ascending dia end in colum index 6' do
+    
+      subject(:four_makers_up_diagonal) { described_class.new(column_index_6_diag) }
+      let(:column_index_6_diag) { [[nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, '🟡', nil], [nil, nil, nil, '🟡', nil, nil], [nil, nil, '🟡', nil, nil, nil], [nil, '🟡', nil, nil, nil, nil]] }
+    
+      it 'returns true' do
+        result = four_makers_up_diagonal.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
   end
 end
+
