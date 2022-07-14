@@ -181,6 +181,99 @@ describe Game do
         player_choice.verify_choice(invalid_choice)
       end
     end
+  end
 
+  describe "#game_over" do
+    subject(:game_over_win) { described_class.new(board, current_player) }
+    let(:board) { double('board') }
+    let(:current_player) { double('current_player', name: 'Tuna') }
+    context 'when game_over is called, declare winner' do
+
+      it 'returns Tuna is the winner statement' do
+        allow(game_over_win).to receive(:new_game_ask)
+        message = "\n\n#{current_player.name} is the winner!\n"
+        expect(game_over_win).to receive(:puts).with(message)
+        game_over_win.game_over
+      end
+    end
+
+    context 'when game over, call new_game_ask' do
+      it 'calls new_game method' do
+        expect(game_over_win).to receive(:new_game_ask)
+        game_over_win.game_over
+      end
+    end
+  end
+
+  describe "#new_game_ask" do
+    subject(:exit_game) { described_class.new(board) }
+    let(:board) { double('board') }
+
+    context 'when a game is over, and user input valid, exits program' do
+      it 'completes loop and does not display error message' do
+        allow(exit_game).to receive(:yes_no_input).and_return(false)
+        valid_input = 'no'
+        expect(exit_game).to receive(:exit)
+        exit_game.new_game_ask
+      end
+    end
+
+    context 'when a game is over, and user input valid, exits program' do
+      before do
+        invald_input = 'sdasd'
+        valid_input = 'no'
+        question =  'Would you like to play again? (yes/no)'
+        allow(exit_game).to receive(:puts).with(question)
+        allow(exit_game).to receive(:gets).and_return(invald_input, invald_input, valid_input)
+      end
+      it 'completes loop and does display error message twice' do
+        error_message = "\n\nYou must enter 'yes' or 'no'\n"
+        expect(exit_game).to receive(:puts).with(error_message).twice
+        exit_game.new_game_ask
+      end
+    end
+
+    context 'when a game is over, and user input valid, exits program' do
+      before do
+        invald_input = 'sdasd'
+        valid_input = 'no'
+        question =  'Would you like to play again? (yes/no)'
+        allow(exit_game).to receive(:puts).with(question)
+        allow(exit_game).to receive(:gets).and_return(invald_input, invalid_input, invald_input, valid_input)
+      end
+      it 'completes loop and does display error message 3 times' do
+        error_message = "\n\nYou must enter 'yes' or 'no'\n"
+        expect(exit_game).to receive(:puts).with(error_message).exactly(3).times
+        exit_game.new_game_ask
+      end
+    end
+
+    context 'when a game is over, and user input valid, exits program' do
+      before do
+        invald_input = 'sdasd'
+        valid_input = 'no'
+        question =  'Would you like to play again? (yes/no)'
+        allow(exit_game).to receive(:puts).with(question)
+        allow(exit_game).to receive(:gets).and_return(valid_input)
+      end
+      it 'completes loop and does not display error message ' do
+        error_message = "\n\nYou must enter 'yes' or 'no'\n"
+        expect(exit_game).not_to receive(:puts).with(error_message)
+        exit_game.new_game_ask
+      end
+    end
+
+    context 'when a game is over, and user input valid, starts new game' do
+      before do
+        valid_input = 'yes'
+        question =  'Would you like to play again? (yes/no)'
+        allow(exit_game).to receive(:puts).with(question)
+        allow(exit_game).to receive(:gets).and_return(valid_input)
+      end
+      it 'completes loop and does display error message twice' do
+        expect(exit_game).to receive(:new)
+        exit_game.new_game_ask
+      end
+    end
   end
 end

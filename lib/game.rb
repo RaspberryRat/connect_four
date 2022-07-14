@@ -28,7 +28,6 @@ class Game
   def play_game
     create_players if @player1.nil?
     puts 'Enter the column number to place your marker'
-    binding.pry
     @game_board.draw_board
     choice = player_input(1, 7)
     return play_game unless verify_choice(choice)
@@ -58,6 +57,28 @@ class Game
   end
 
   def game_over
-    true
+    puts "\n\n#{current_player.name} is the winner!\n"
+    new_game_ask
+  end
+
+  def new_game_ask
+    puts 'Would you like to play again? (yes/no)'
+    return Game.new.play_game if yes_no_input
+
+    exit
+  end
+
+  private
+
+  def yes_no_input
+    input = ''
+    loop do
+      input = gets.chomp.strip.downcase
+      return true if input == 'yes'
+
+      return false if input == 'no'
+
+      puts "\n\nYou must enter 'yes' or 'no'\n"
+    end
   end
 end
