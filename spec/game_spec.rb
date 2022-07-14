@@ -62,7 +62,7 @@ describe Game do
       end
 
       it 'calls #create_players' do
-        allow(board).to receive(:place_token).with(nil, 'X')
+        allow(board).to receive(:place_token).with(Integer, 'X')
         allow(new_game_test_script).to receive(:player_input)
         expect(new_game_test_script).to receive(:create_players).once
         new_game_test_script.play_game

@@ -27,12 +27,12 @@ class Game
 
   def play_game
     create_players if @player1.nil?
-    puts 'Enter the column number to place your marker'
+    puts "Enter the column number to place your marker>>\n"
     @game_board.draw_board
     choice = player_input(1, 7)
     return play_game unless verify_choice(choice)
 
-    @game_board.place_token(choice, current_player.marker)
+    @game_board.place_token(choice.to_i - 1, current_player.marker)
   end
 
   def player_input(min, max)
@@ -82,3 +82,5 @@ class Game
     end
   end
 end
+
+#TODO Placing token isn't working or draw_board isn't taking updated drawing
