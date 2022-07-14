@@ -174,11 +174,7 @@ describe Board do
       end
     end
 
-<<<<<<< HEAD
     context 'when there are four markers in decending diagonal' do
-=======
-    context 'when there are four markers in downward diagonal' do
->>>>>>> 1f1c823ccd0b7a9b54d1bb6e336ef5ac92e0865e
 
       subject(:four_makers_down_diagonal) { described_class.new(win_downward_diagonal) }
       let(:win_downward_diagonal) { [[nil, nil, '🔴', nil, nil, nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, nil, nil, '🔴', nil], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
@@ -199,7 +195,6 @@ describe Board do
         expect(result).to be(true)
       end
     end
-<<<<<<< HEAD
 
     context 'when there are four markers in ascending diagonal' do
 
@@ -288,7 +283,16 @@ describe Board do
         expect(result).to be(true)
       end
     end
-=======
->>>>>>> 1f1c823ccd0b7a9b54d1bb6e336ef5ac92e0865e
+
+    context 'when yellow markers and red markers in same column' do
+    
+      subject(:both_colours) { described_class.new(first_column) }
+      let(:first_column) { [[nil, nil, '🔴', '🔴', '🟡', '🟡'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+    
+      it 'returns false' do
+        result = both_colours.four_in_a_row?
+        expect(result).to be(false)
+      end
+    end
   end
 end

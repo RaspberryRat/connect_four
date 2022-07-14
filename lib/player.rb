@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 class Player
   @@player_count = 0

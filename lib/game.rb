@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'board'
 require_relative 'player'
 
@@ -26,6 +28,7 @@ class Game
   def play_game
     create_players if @player1.nil?
     puts 'Enter the column number to place your marker'
+    binding.pry
     @game_board.draw_board
     choice = player_input(1, 7)
     return play_game unless verify_choice(choice)
@@ -34,6 +37,7 @@ class Game
   end
 
   def player_input(min, max)
+
     loop do
       choice = gets.chomp.to_i
       return choice if verify_input(min, max, choice)
