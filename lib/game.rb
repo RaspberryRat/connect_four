@@ -4,7 +4,7 @@ require_relative 'board'
 require_relative 'player'
 
 class Game
-  def initialize(board = Board.new, current_player = nil)
+  def initialize(board = Board.new(self), current_player = nil)
     @game_board = board
     @current_player = current_player
     @player1 = nil
@@ -55,5 +55,9 @@ class Game
 
     puts "Column #{choice} is full, you must choose a different column."
     false
+  end
+
+  def game_over
+    true
   end
 end

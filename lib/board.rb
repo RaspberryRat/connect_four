@@ -2,7 +2,8 @@
 require 'pry-byebug'
 
 class Board
-  def initialize(board = create_board)
+  def initialize(game, board = create_board)
+    @game = game
     @board = board
   end
   attr_reader :board
@@ -39,7 +40,7 @@ class Board
     result = []
     board[column].each_with_index { |row, index| result << index if row.nil? }
     board[column][result.last] = marker
-    return game_over if winner?
+    return @game.game_over if winner?
   end
 
   def winner?
@@ -62,10 +63,6 @@ class Board
     return true if ascending_diagonal?(marker1, marker2)
 
     false
-  end
-
-  def game_over
-    true
   end
 
   private
