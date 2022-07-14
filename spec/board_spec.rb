@@ -286,12 +286,67 @@ describe Board do
 
     context 'when yellow markers and red markers in same column' do
     
-      subject(:both_colours) { described_class.new(first_column) }
+      subject(:both_colours_column) { described_class.new(first_column) }
       let(:first_column) { [[nil, nil, '🔴', '🔴', '🟡', '🟡'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
     
       it 'returns false' do
-        result = both_colours.four_in_a_row?
+        result = both_colours_column.four_in_a_row?
         expect(result).to be(false)
+      end
+    end
+
+    context 'when yellow markers and red markers in same row' do
+    
+      subject(:both_colours_row) { described_class.new(same_row) }
+      let(:same_row) { [[nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+    
+      it 'returns false' do
+        result = both_colours_row.four_in_a_row?
+        expect(result).to be(false)
+      end
+    end
+
+    context 'when yellow markers and red markers in ascending diagonal' do
+    
+      subject(:both_colours_row) { described_class.new(same_row) }
+      let(:same_row) { [[nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, '🔴', nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, '🟡', nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+    
+      it 'returns false' do
+        result = both_colours_row.four_in_a_row?
+        expect(result).to be(false)
+      end
+    end
+
+    context 'when red markers 4 in a row same column, yellow also in column' do
+    
+      subject(:both_colours_col_red_win) { described_class.new(same_column) }
+      let(:same_column) { [['🔴', '🔴', '🔴', '🔴', '🟡', '🟡'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+    
+      it 'returns true' do
+        result = both_colours_col_red_win.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+
+    context 'when red markers 4 in a row same row, yellow also in row' do
+    
+      subject(:both_colours_row_red_win) { described_class.new(same_row) }
+      let(:same_row) { [[nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil]] }
+    
+      it 'returns true' do
+        result = both_colours_row_red_win.four_in_a_row?
+        expect(result).to be(true)
+      end
+    end
+
+    context 'when red markers 4 in a row same diag, yellow also in diag' do
+    
+      subject(:both_colours_row_red_win) { described_class.new(same_row) }
+      let(:same_row) { [[nil, nil, nil, nil, nil, '🟡'], [nil, nil, nil, nil, '🟡', nil], [nil, nil, nil, '🔴', nil, nil], [nil, nil, '🔴', nil, nil, nil], [nil, '🔴', nil, nil, nil, nil], ['🔴', nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+    
+      it 'returns true' do
+        result = both_colours_row_red_win.four_in_a_row?
+        expect(result).to be(true)
       end
     end
   end
