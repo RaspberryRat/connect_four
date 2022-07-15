@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'pry-byebug'
 
 class Board
   def initialize(game, board = create_board)
