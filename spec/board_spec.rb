@@ -15,20 +15,44 @@ describe Board do
 
   describe '#draw_board' do
     context 'when board is unplayed draws the current state of @board' do
+      subject(:initial_board) { described_class.new(game) }
+      let(:game) { double('game') }
+
       it 'draws @board to terminal' do
         drawn_board = 
-        "_____________________\n" +
-        "|◯||◯||◯||◯||◯||◯||◯|\n" +
-        "|◯||◯||◯||◯||◯||◯||◯|\n" +
-        "|◯||◯||◯||◯||◯||◯||◯|\n" +
-        "|◯||◯||◯||◯||◯||◯||◯|\n" +
-        "|◯||◯||◯||◯||◯||◯||◯|\n" +
-        "|◯||◯||◯||◯||◯||◯||◯|\n" +
-        "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n" +
-        " 1  2  3  4  5  6  7 "
+        "____________________________\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n" +
+        " 1   2   3   4    5   6   7 \n"
 
-        expect(board).to receive(:print).with(drawn_board)
-        board.draw_board
+        expect(initial_board).to receive(:print).with(drawn_board)
+        initial_board.draw_board
+      end
+    end
+
+    context 'when token is place terminal output displays change' do
+      subject(:first_token_on_board) { described_class.new(game, first_marker) }
+      let(:game) { double('game') }
+      let(:first_marker) { [[nil, nil, nil, nil, nil, '🔴'], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] }
+
+      it 'draws updated board with marker at column 1, index 6 to terminal' do
+        drawn_board = 
+        "____________________________\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "|⚪||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "|🔴||⚪||⚪||⚪||⚪||⚪||⚪|\n" +
+        "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n" +
+        " 1   2   3   4    5   6   7 \n"
+        expect(first_token_on_board).to receive(:print).with(drawn_board)
+        first_token_on_board.draw_board
       end
     end
   end

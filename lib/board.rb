@@ -10,22 +10,22 @@ class Board
 
   # prints 7 arrays that are an Array with 6 nil, 7 Array represent column, with 6 arrays representing the rows
   def create_board
-    Array.new(7, Array.new(6))
+    Array.new(7) { Array.new(6) }
   end
 
   def draw_board
-    board_to_print = "_____________________\n"
+    board_to_print = "____________________________\n"
 
     row = 0
     board[0].length.times do
       board.map do |column|
-        board_to_print += column[row].nil? ? "|◯|" : "|#{column[row]}|"
+        board_to_print += column[row].nil? ? "|⚪|" : "|#{column[row]}|"
       end
       board_to_print += "\n"
       row += 1
     end
-    board_to_print += "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n"
-    board_to_print += " 1  2  3  4  5  6  7 "
+    board_to_print += "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n"
+    board_to_print += " 1   2   3   4    5   6   7 \n"
 
     print board_to_print
   end
@@ -44,13 +44,16 @@ class Board
   end
 
   def winner?
-    return true if four_in_a_row?
-
-    false
+    if four_in_a_row?
+      draw_board
+      true
+    else
+      false
+    end
   end
 
   def four_in_a_row?
-    marker1 = '🔴'
+    marker1 = '🔴' 
     marker2 = '🟡'
     result = []
 

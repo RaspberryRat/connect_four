@@ -26,17 +26,22 @@ class Game
   end
 
   def play_game
-    create_players if @player1.nil?
-    puts "Enter the column number to place your marker>>\n"
-    @game_board.draw_board
-    choice = player_input(1, 7)
-    return play_game unless verify_choice(choice)
+    loop do
+      create_players if @current_player.nil?
+      puts "\n\nIt is #{current_player.name}'s turn\n"
+      puts "Enter the column number to place your marker>>\n"
+      @game_board.draw_board
+      choice = player_input(1, 7)
+      choice = choice.to_i - 1
 
-    @game_board.place_token(choice.to_i - 1, current_player.marker)
+      return play_game unless verify_choice(choice)
+
+      @game_board.place_token(choice, current_player.marker)
+      @current_player = @current_player == @player1 ? @player2 : @player1
+    end
   end
 
   def player_input(min, max)
-
     loop do
       choice = gets.chomp.to_i
       return choice if verify_input(min, max, choice)
@@ -50,7 +55,7 @@ class Game
   end
 
   def verify_choice(choice)
-    return if @game_board.legal_move?(choice)
+    return true if @game_board.legal_move?(choice)
 
     puts "Column #{choice} is full, you must choose a different column."
     false
