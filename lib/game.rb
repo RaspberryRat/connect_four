@@ -3,6 +3,7 @@
 require_relative 'board'
 require_relative 'player'
 
+# Handles the game logic related
 class Game
   def initialize(board = Board.new(self), current_player = nil)
     @game_board = board
@@ -87,5 +88,3 @@ class Game
     end
   end
 end
-
-#TODO Placing token isn't working or draw_board isn't taking updated drawing

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# handles logic related to the game board
 class Board
   def initialize(game, board = create_board)
     @game = game
@@ -52,9 +53,8 @@ class Board
   end
 
   def four_in_a_row?
-    marker1 = '🔴' 
+    marker1 = '🔴'
     marker2 = '🟡'
-    result = []
 
     return true if same_column?(marker1, marker2)
 
@@ -126,9 +126,9 @@ class Board
         result << diagonal_array if diagonal_array[i..i + 3].all? { |m| m == marker2 }
         i += 1
       end
-    row += 1
-    dia_row = row
-    diagonal_array = []
+      row += 1
+      dia_row = row
+      diagonal_array = []
     end
     result = column6_descending_diagonal(marker1, marker2) if result.empty?
     return true unless result.empty?
